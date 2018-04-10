@@ -31,13 +31,13 @@ var movies = [
 	},
 ];
 
-var Movie = React.createClass({								// 1.
+var Movie = React.createClass({	
 	render: function(){
-	 return React.createElement('li', {key: movie.id},	
-			React.createElement('h2', {}, movie.title),
-			React.createElement('p', {}, movie.desc),
-			React.createElement('img', {src: movie.img}) 
-		)
+	 	return (React.createElement('li', {key: this.props.movie.id},	
+				React.createElement('h2', {}, this.props.movie.title),
+				React.createElement('p', {}, this.props.movie.desc),
+				React.createElement('img', {src: this.props.movie.img}) 
+			))
 	} 
 });
 /*
@@ -49,19 +49,23 @@ var moviesElements = movies.map(function(movie) {
  	})										   	 
 }); 
 */
-var moviesElements = 
-	React.createClass({
-		render: function(){
-			return movies.map(function(movie) {React.createElement('Movie', {}, movie),
-			}		
-		})	
-	}); 
+var moviesElements = React.createClass({
+	render: function(){
+		var MovieElements = movies.map(function(movie) {
+      	return React.createElement(Movie, {
+              key: movie.id,
+              movie: movie
+          });
+      	});
+      return React.createElement('ul', {}, MovieElements);
+	}	
+}); 
 
 
 var element = 
 	React.createElement('div', {}, 
 		React.createElement('h1', {}, 'Lista filmów'),
-		React.createElement('ul', {}, moviesElements) // umieszczenie powyższych elementów w liście
+		React.createElement(moviesElements, {movies: movies})
 	);
 
 
